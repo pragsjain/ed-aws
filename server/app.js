@@ -12,7 +12,8 @@ app.use(cors());
 app.get('/api/users',(req,res)=>{
     res.send([
         {
-            name:"VARUN (pyar se bolun to V.)"
+            myLove:"VARUN (pyar se bolun to V.)",
+            hisLove:"tumhari PRAGU"
         }
     ]
     )
