@@ -11,6 +11,7 @@ export class AppComponent {
   constructor(private http:HttpClient){}
   ngOnInit(){
     this.http.get('http://52.66.252.216:3000/api/users').subscribe((data)=>
+    //this.http.get('http://localhost:3000/api/users').subscribe((data)=>
     {this.users=data;
     })
   }
