@@ -8,14 +8,13 @@ const path =require('path');
 //it will allows from all the clients
 app.use(cors());
 
-
 app.get('/api/users',(req,res)=>{
-    res.send([
+    res.send(
         {
             myLove:"VARUN (pyar se bolun to V.)",
             hisLove:"tumhari PRAGU"
         }
-    ]
+    
     )
    // res.sendFile(path.join(__dirname, '../server/public', 'file.js'));
 })
