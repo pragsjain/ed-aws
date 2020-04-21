@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { SocketioService } from './socketio.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,10 @@ export class AppComponent {
   users:any=[]
   constructor(private http:HttpClient, private socketService:SocketioService){}
   ngOnInit(){
-    //this.http.get('http://52.66.252.216:3000/api/users').subscribe((data)=>
-    this.http.get('http://localhost:3000/api/users').subscribe((data)=>
+    let url=environment.SOCKET_ENDPOINT+'/api/users';
+    this.http.get(url).subscribe((data)=>
+    //this.http.get('http://localhost:3000/api/users').subscribe((data)=>
+    //this.http.get('api/api/users').subscribe((data)=>
     {this.users=data;
     })
 

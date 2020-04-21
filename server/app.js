@@ -5,20 +5,12 @@ const fs = require('fs');
 const path =require('path');
 
 //for socket
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
-io.origins('http://localhost:4200') ;
-io.origins((origin, callback) => {
-    if (origin !== 'http://localhost:4200') {
-      return callback('origin not allowed', false);
-    }
-    callback(null, true);
-  });
+var http = require('http').createServer(app);
 
 
 //for CORS either use broser extension or this middleware
 //it will allows from all the clients
-app.use(cors());
+//app.use(cors());
 // Settings for CORS
 app.use(function (req, res, next) {
 
@@ -33,7 +25,7 @@ app.use(function (req, res, next) {
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', false);
+    res.setHeader('Access-Control-Allow-Credentials', true);
 
     // Pass to next layer of middleware
     next();
@@ -92,20 +84,35 @@ app.get('/split/name', (req, res) => {
     });// end calculate age
 
 
+http = app.listen(3000);
 
-io.on('connection', (socket) => {
+// http.listen(3000, () => {
+//   console.log('listening on *:3000');
+// });
+
+const io = require('socket.io')(http);
+io.origins('http://localhost:4200') ;
+io.origins((origin, callback) => {
+    if (origin !== 'http://localhost:4200') {
+      return callback('origin not allowed', false);
+    }
+    callback(null, true);
+  });
+  io.on('connection', (socket) => {
     console.log('a user connected');
-    socket.on('disconnect', () => {
-      console.log('user disconnected');
-    });
+    // socket.on('disconnect', () => {
+    //   console.log('user disconnected');
+    // });
     socket.on('my message', (msg) => {
       console.log('message: ' + msg);
     });
+    socket.emit('news', { hello: 'world' });
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
   });
 
-http.listen(3000, () => {
-  console.log('listening on *:3000');
-});
+
 
 // app.listen(3000,()=>{
 //     console.log('server listening on port 3000')
