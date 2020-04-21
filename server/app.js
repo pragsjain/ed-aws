@@ -15,7 +15,7 @@ var http = require('http').createServer(app);
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+    res.header('Access-Control-Allow-Origin', 'http://52.66.252.216:3001/');
 
     // Request methods you wish to allow
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -84,16 +84,16 @@ app.get('/split/name', (req, res) => {
     });// end calculate age
 
 
-http = app.listen(3000);
+//http = app.listen(3000);
 
-// http.listen(3000, () => {
-//   console.log('listening on *:3000');
-// });
+http.listen(3000, () => {
+  console.log('listening on *:3000');
+});
 
 const io = require('socket.io')(http);
-io.origins('http://localhost:4200') ;
+io.origins('http://52.66.252.216:3001/') ;
 io.origins((origin, callback) => {
-    if (origin !== 'http://localhost:4200') {
+    if (origin !== 'http://52.66.252.216:3001/') {
       return callback('origin not allowed', false);
     }
     callback(null, true);
